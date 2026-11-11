@@ -1,0 +1,8 @@
+{
+  "name": "Remix Free 2027 Digital Planner \u0026 Habit Tracker Generator",
+  "description": "Download your free 2027 Digital Planner PDF or generate a personalized AI Habit Tracker. Instant access, hyperlinked planner, and productivity tools.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
