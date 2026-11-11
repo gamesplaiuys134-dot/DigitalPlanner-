@@ -1,7 +1,8 @@
-/**
- * CONFIGURABLE DOWNLOAD SYSTEM
- */
-export const DIGITAL_PLANNER_URL = "YOUR_DIGITAL_PLANNER_PDF_URL";
+export const DIGITAL_PLANNER_URL =
+  "https://docs.google.com/spreadsheets/d/1t6VHLBKt-uzQedIaKA-maGJnq_MHERw7el7YPjADxE8/edit?usp=sharing";
+
+export const HABIT_TRACKER_PROMPT_URL =
+  "https://claude.ai/artifact/2VfqytpoYwZLbBcpDq8Z37";
 
 export const HABIT_TRACKER_PROMPT = `Act as an expert Habit Architect, Behavioral Psychologist, and High-Performance Routine Designer.
 

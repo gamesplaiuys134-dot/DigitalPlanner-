@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { X, Lock, Sparkles, ShieldCheck, Loader2, RefreshCw, CheckCircle2, AlertCircle, ArrowRight, Smartphone, Laptop } from "lucide-react";
 import { Offer, OfferType } from "../types";
 
+import { DIGITAL_PLANNER_URL, HABIT_TRACKER_PROMPT_URL } from "../config";
+
 interface OfferModalProps {
   isOpen: boolean;
   activeOffer: OfferType;
@@ -81,8 +83,8 @@ export const OfferModal: React.FC<OfferModalProps> = ({
 
   const targetTitle =
     activeOffer === "planner"
-      ? "Digital Planner 2027 (PDF)"
-      : "AI Habit Tracker Prompt";
+      ? "Digital Planner 2027 (Google Sheets / PDF)"
+      : "AI Habit Tracker Prompt (Claude.ai)";
 
   const handleOfferClick = (offer: Offer) => {
     setClickedOfferId(offer.offerid);
@@ -94,10 +96,18 @@ export const OfferModal: React.FC<OfferModalProps> = ({
 
   const handleManualVerify = () => {
     setIsVerifying(true);
+    
+    // Direct visitor immediately to their unlocked resource in a new tab
+    const destinationUrl =
+      activeOffer === "planner" ? DIGITAL_PLANNER_URL : HABIT_TRACKER_PROMPT_URL;
+    if (destinationUrl) {
+      window.open(destinationUrl, "_blank", "noopener,noreferrer");
+    }
+
     setTimeout(() => {
       onUnlockSuccess(activeOffer);
       onClose();
-    }, 1000);
+    }, 600);
   };
 
   return (

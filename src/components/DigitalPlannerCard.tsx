@@ -1,6 +1,6 @@
 import React from "react";
 import { Check, Download, FileText, CheckCircle2, Calendar } from "lucide-react";
-import { PLANNER_FEATURES } from "../config";
+import { PLANNER_FEATURES, DIGITAL_PLANNER_URL } from "../config";
 
 interface DigitalPlannerCardProps {
   onUnlockClick: () => void;
@@ -167,11 +167,13 @@ export const DigitalPlannerCard: React.FC<DigitalPlannerCardProps> = ({
 
             {isUnlocked ? (
               <a
-                href="#download-section"
+                href={DIGITAL_PLANNER_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-full inline-flex items-center justify-center gap-1.5 py-2.5 sm:py-3 px-4 rounded-xl font-bold text-white text-xs sm:text-sm bg-[#22B36B] hover:bg-[#1ca05e] transition-all shadow-md text-center cursor-pointer"
               >
                 <CheckCircle2 className="w-4 h-4" />
-                <span>UNLOCKED — DOWNLOAD PDF</span>
+                <span>UNLOCKED — OPEN DIGITAL PLANNER</span>
               </a>
             ) : (
               <button

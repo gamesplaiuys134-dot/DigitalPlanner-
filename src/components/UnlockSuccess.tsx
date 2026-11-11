@@ -11,7 +11,7 @@ import {
   HelpCircle,
   Lightbulb
 } from 'lucide-react';
-import { DIGITAL_PLANNER_URL, HABIT_TRACKER_PROMPT } from '../config';
+import { DIGITAL_PLANNER_URL, HABIT_TRACKER_PROMPT, HABIT_TRACKER_PROMPT_URL } from '../config';
 import { UnlockState } from '../types';
 
 interface UnlockSuccessProps {
@@ -45,23 +45,8 @@ export const UnlockSuccess: React.FC<UnlockSuccessProps> = ({ unlockState }) => 
   };
 
   const handleDownloadPDF = () => {
-    // Open configured PDF URL
-    if (DIGITAL_PLANNER_URL === "YOUR_DIGITAL_PLANNER_PDF_URL") {
-      // Placeholder alert or direct download trigger
-      const dummyBlob = new Blob([
-        `%PDF-1.4\n% 2027 Digital Planner Placeholder\n% Configured via DIGITAL_PLANNER_URL in config.ts\n1 0 obj\n<< /Title (2027 Digital Planner) >>\nendobj\ntrailer\n<< /Root 1 0 R >>\n%%EOF`
-      ], { type: 'application/pdf' });
-      const url = URL.createObjectURL(dummyBlob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'Digital_Planner_2027_Edition.pdf';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    } else {
-      window.open(DIGITAL_PLANNER_URL, '_blank', 'noopener,noreferrer');
-    }
+    // Direct open planner
+    window.open(DIGITAL_PLANNER_URL, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -71,18 +56,30 @@ export const UnlockSuccess: React.FC<UnlockSuccessProps> = ({ unlockState }) => 
       {unlockState.planner && (
         <div className="bg-white rounded-2xl border-2 border-emerald-500 shadow-xl overflow-hidden transition-all">
           {/* Green Success Message Banner */}
-          <div className="bg-gradient-to-r from-emerald-600 to-teal-600 p-5 sm:p-6 text-white flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center shrink-0">
-              <CheckCircle2 className="w-6 h-6 text-white" />
+          <div className="bg-gradient-to-r from-emerald-600 to-teal-600 p-5 sm:p-6 text-white flex items-center justify-between flex-wrap gap-3">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center shrink-0">
+                <CheckCircle2 className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <span className="text-xs font-bold uppercase tracking-wider text-emerald-200">
+                  Verification Successful!
+                </span>
+                <h3 className="text-lg sm:text-xl font-extrabold text-white">
+                  Your 2027 Digital Planner is Unlocked &amp; Ready
+                </h3>
+              </div>
             </div>
-            <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-emerald-200">
-                Verification Successful!
-              </span>
-              <h3 className="text-lg sm:text-xl font-extrabold text-white">
-                Your 2027 Digital Planner PDF is Ready for Download
-              </h3>
-            </div>
+
+            <a
+              href={DIGITAL_PLANNER_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl font-bold text-xs sm:text-sm bg-white text-emerald-800 hover:bg-emerald-50 shadow-md transition-all cursor-pointer"
+            >
+              <ExternalLink className="w-4 h-4" />
+              <span>Open Spreadsheet</span>
+            </a>
           </div>
 
           <div className="p-6 sm:p-8 space-y-6">
@@ -93,23 +90,26 @@ export const UnlockSuccess: React.FC<UnlockSuccessProps> = ({ unlockState }) => 
                 </div>
                 <div>
                   <h4 className="font-extrabold text-[#14213D] text-base">
-                    Digital_Planner_2027_Edition.pdf
+                    Digital Planner 2027 Edition
                   </h4>
                   <p className="text-xs text-gray-500">
-                    Interactive Hyperlinked PDF • 14.2 MB • Full Year 2027
+                    Google Sheets Spreadsheet &amp; Exportable PDF • Full Year 2027
                   </p>
                 </div>
               </div>
 
-              {/* Download PDF button */}
-              <button
-                onClick={handleDownloadPDF}
-                type="button"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-extrabold text-white text-base shadow-lg bg-[#22B36B] hover:bg-[#1ca05e] transition-all transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
-              >
-                <Download className="w-5 h-5" />
-                <span>Download PDF</span>
-              </button>
+              {/* Access Google Sheets button */}
+              <div className="w-full sm:w-auto flex flex-col sm:flex-row gap-2">
+                <a
+                  href={DIGITAL_PLANNER_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-extrabold text-white text-sm sm:text-base shadow-lg bg-[#22B36B] hover:bg-[#1ca05e] transition-all transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+                >
+                  <ExternalLink className="w-5 h-5" />
+                  <span>Access Google Sheets Planner</span>
+                </a>
+              </div>
             </div>
 
             {/* Quick App Import Instructions */}
@@ -120,13 +120,13 @@ export const UnlockSuccess: React.FC<UnlockSuccessProps> = ({ unlockState }) => 
               </div>
               <ol className="list-decimal list-inside space-y-1.5 text-gray-700 pl-1">
                 <li>
-                  <strong>Download the PDF</strong> to your iPad, tablet, or desktop using the button above.
+                  <strong>Open the Google Sheet</strong> by clicking the green button above.
                 </li>
                 <li>
-                  <strong>Open in your favorite note app:</strong> GoodNotes, Notability, Apple Books, Samsung Notes, or Adobe Acrobat.
+                  <strong>Make a private copy:</strong> In Google Sheets, tap <em>File &rarr; Make a copy</em> to save it to your own Google Drive.
                 </li>
                 <li>
-                  <strong>Click the side tabs</strong> to navigate instantly between monthly calendars, daily pages, and habit grids.
+                  <strong>Optional PDF Export:</strong> Tap <em>File &rarr; Download &rarr; PDF</em> if you want to import it directly into GoodNotes, Notability, or Apple Books.
                 </li>
               </ol>
             </div>
@@ -153,28 +153,40 @@ export const UnlockSuccess: React.FC<UnlockSuccessProps> = ({ unlockState }) => 
               </div>
             </div>
 
-            {/* Copy Prompt Button in Header */}
-            <button
-              onClick={handleCopyPrompt}
-              type="button"
-              className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm shadow-md transition-all cursor-pointer ${
-                copiedPrompt
-                  ? 'bg-emerald-500 text-white'
-                  : 'bg-white text-blue-800 hover:bg-blue-50'
-              }`}
-            >
-              {copiedPrompt ? (
-                <>
-                  <Check className="w-4 h-4 stroke-[3]" />
-                  <span>Copied to Clipboard!</span>
-                </>
-              ) : (
-                <>
-                  <Copy className="w-4 h-4" />
-                  <span>Copy Prompt</span>
-                </>
-              )}
-            </button>
+            {/* Action Buttons in Header */}
+            <div className="flex items-center gap-2 flex-wrap">
+              <a
+                href={HABIT_TRACKER_PROMPT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl font-bold text-xs sm:text-sm bg-white text-blue-800 hover:bg-blue-50 shadow-md transition-all cursor-pointer"
+              >
+                <ExternalLink className="w-4 h-4" />
+                <span>Open in Claude.ai</span>
+              </a>
+
+              <button
+                onClick={handleCopyPrompt}
+                type="button"
+                className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer ${
+                  copiedPrompt
+                    ? 'bg-emerald-500 text-white'
+                    : 'bg-blue-900/60 text-white border border-white/20 hover:bg-blue-900'
+                }`}
+              >
+                {copiedPrompt ? (
+                  <>
+                    <Check className="w-4 h-4 stroke-[3]" />
+                    <span>Copied!</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-4 h-4" />
+                    <span>Copy Prompt</span>
+                  </>
+                )}
+              </button>
+            </div>
           </div>
 
           <div className="p-6 sm:p-8 space-y-6">
@@ -183,7 +195,7 @@ export const UnlockSuccess: React.FC<UnlockSuccessProps> = ({ unlockState }) => 
             {copiedPrompt && (
               <div className="bg-emerald-50 border border-emerald-300 text-emerald-800 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow-xs animate-fade-in">
                 <Check className="w-4 h-4 text-emerald-600 stroke-[3]" />
-                Prompt copied successfully! Paste it into ChatGPT or Gemini to generate your custom tracker.
+                Prompt copied successfully! Paste it into Claude, ChatGPT, or Gemini to generate your custom tracker.
               </div>
             )}
 
@@ -194,7 +206,15 @@ export const UnlockSuccess: React.FC<UnlockSuccessProps> = ({ unlockState }) => 
                   <Bot className="w-4 h-4 text-blue-600" />
                   Master Habit Architect Prompt
                 </span>
-                <span className="text-gray-400">Ready to paste</span>
+                <a
+                  href={HABIT_TRACKER_PROMPT_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:text-blue-800 font-semibold flex items-center gap-1 text-xs"
+                >
+                  <span>Open directly in Claude.ai</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
               </div>
 
               <div className="relative bg-slate-900 text-slate-100 rounded-xl p-4 sm:p-5 font-mono text-xs leading-relaxed max-h-[380px] overflow-y-auto border border-slate-700 shadow-inner">
@@ -204,8 +224,18 @@ export const UnlockSuccess: React.FC<UnlockSuccessProps> = ({ unlockState }) => 
               </div>
             </div>
 
-            {/* Bottom Copy Prompt Button */}
-            <div className="flex justify-end">
+            {/* Bottom Action Buttons */}
+            <div className="flex flex-col sm:flex-row justify-end gap-2.5">
+              <a
+                href={HABIT_TRACKER_PROMPT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-bold text-sm shadow-md bg-white border border-gray-300 text-gray-800 hover:bg-gray-50 transition-all cursor-pointer"
+              >
+                <ExternalLink className="w-4 h-4 text-blue-600" />
+                <span>Open in Claude.ai Artifact</span>
+              </a>
+
               <button
                 onClick={handleCopyPrompt}
                 type="button"
